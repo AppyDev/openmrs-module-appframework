@@ -31,23 +31,50 @@ public class AllUserApps {
 	
 	@Transactional(readOnly = true)
 	public UserApp getUserApp(String appId) {
-		return (UserApp) sessionFactory.getCurrentSession().get(UserApp.class, appId);
+		try{
+			UserApp user = (UserApp) sessionFactory.getCurrentSession().get(UserApp.class, appId);
+			log.debug("Successfully retrieved user app.");
+			return user;
+		}catch(Exception e){
+			log.debug("Error in getting user app.");
+		}
+			
+		
 	}
 	
 	@Transactional
 	public UserApp saveUserApp(UserApp userApp) {
-		sessionFactory.getCurrentSession().saveOrUpdate(userApp);
-		return userApp;
+		try{
+			sessionFactory.getCurrentSession().saveOrUpdate(userApp);
+			log.debug("User saved successfully.");
+			return userApp;
+		}catch(Exception e){
+			log.debug("Error in saving user.");
+		}		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<UserApp> getUserApps() {
-		return sessionFactory.getCurrentSession().createCriteria(UserApp.class).list();
+		try{
+			List<UserApp> users = sessionFactory.getCurrentSession().createCriteria(UserApp.class).list();
+			log.debug("Successfully retrived user apps.");
+			return users;
+		}catch(Exception e){
+			log.debug("Error in getting user apps.");
+		}
+		
 	}
 	
 	@Transactional
 	public void deleteUserApp(UserApp userApp) {
-		sessionFactory.getCurrentSession().delete(userApp);
+		try{
+			sessionFactory.getCurrentSession().delete(userApp);
+			log.debug("User deleted successfully.");
+			return userApp;
+		}catch(Exception e){
+			log.debug("Error in deleting user.");
+		}
+		
 	}
 	
 }
